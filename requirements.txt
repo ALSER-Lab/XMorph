@@ -1,0 +1,29 @@
+# Core
+numpy
+pandas
+scipy
+matplotlib
+tqdm
+
+# Imaging / features
+opencv-python
+Pillow
+scikit-image
+
+# ML
+scikit-learn
+xgboost
+
+# Deep learning
+torch
+torchvision
+tensorflow
+
+# Explainability
+pytorch-grad-cam
+
+# Optional (plots)
+seaborn
+
+# Notebooks
+jupyter
