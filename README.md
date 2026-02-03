@@ -44,7 +44,7 @@ How **XMorph** differs from existing state-of-the-art diagnostic tools:
 2. **Stage 2 – Tumor-Specific & IWBN Features**
    - **Input:** Tumor Mask + Boundary Contour.
    - **Process:** Extraction of radiological clinical features (REI, MLS) and our novel **Information-Weighted Boundary Normalization (IWBN)** time-series.
-   - **Output:** Quantitative feature arrays (`Non_Linear_Features.npy`, `clinical_features.npy`).
+   - **Output:** Quantitative feature arrays (`Non_Linear_Features.npy`, `information_weighted_time_series.npy`,`clinical_features.npy`).
 
 3. **Stage 3–5 – Feature Fusion and Classification**
    - **Input:** Deep CNN Embeddings + Stage 2 Feature Vectors.
