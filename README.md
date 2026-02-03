@@ -80,21 +80,5 @@ How **XMorph** differs from existing state-of-the-art diagnostic tools:
 └── README.md                            # This file
 ---
 
-## 🚀 Setup & Reproducibility
-
-All notebooks must be executed **sequentially** to preserve the data dependency chain.
-
-### Environment Setup
-
-```bash
-# Create and activate virtual environment
-python -m venv .venv
-source .venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Launch Jupyter
-jupyter notebook
 
 
