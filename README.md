@@ -62,9 +62,23 @@ How **XMorph** differs from existing state-of-the-art diagnostic tools:
 Reproducibility: All experiments use fixed random seeds (see notebooks).
 
 LLM Stage: Textual explanations are exported as CSV files and can be re-processed with GPT-4 or GPT-5 for deterministic narrative reproduction.
+🚀 Setup & Reproducibility
+Notebooks must be run sequentially to maintain the data dependency chain. Follow these steps to set up your environment:
+code
+Bash
+# Create and activate virtual environment
+python -m venv .venv
+source .venv/bin/activate
 
----
-
+# Install dependencies
+jupyter notebook
+- **Execution Order:**
+Script/Stage1_DeepLabV3_Segmentation.ipynb
+Script/Stage2_Tumor_Specific_Features.ipynb
+Script/Stage(3_4_5)_Deep Features_Features Fusion_Classification.ipynb
+Script/Stage6_Dual-Channel Visual–Textual Explainability.ipynb
+# 📜 Citation
+If you use XMorph in your research, please cite our work
 ## 📂 Repository Structure
 
 ```text
