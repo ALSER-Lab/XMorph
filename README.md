@@ -1,97 +1,100 @@
-Xmporph
-## Pipeline Stages
+# XMorph: Explainable Brain Tumor Analysis Via LLM-Assisted Hybrid Deep Intelligence
 
-1. **Stage 1 – Tumor Segmentation**
-   - DeepLabV3-based semantic segmentation to localize tumor regions.
+<p align="center">
+  <img src="src/logo.png" width="400" alt="XMorph Logo">
+</p>
 
-2. **Stage 2 – Tumor-Specific & Information-Weighted Features**
-   - Extraction of radiological features and information-weighted boundary time-series.
+The official implementation of **XMorph**, a clinically interpretable and computationally efficient framework for fine-grained brain tumor classification. XMorph bridges the gap between high-performance deep learning and clinical trust by fusing deep visual features, nonlinear dynamics (**IWBN**), and quantitative radiological biomarkers with dual-channel explainability.
 
-3. **Stage 3–5 – Deep Features, Feature Fusion, and Classification**
-   - CNN-based deep feature extraction (ResNet-50)
-   - Feature fusion with tumore specific features 
-   
+---
+
+## 📊 Performance Summary
+Validated results on the Figshare and BraTS datasets as detailed in the accompanying paper:
+
+| Metric | Result |
+| :--- | :--- |
+| **Classification Accuracy** | **96.0%** |
+| **Segmentation Dice Score (WT)** | **0.932** |
+| **Interpretability** | **Dual-Channel** (Visual + Textual) |
+
+---
+
+## 🔍 Capability Comparison
+How **XMorph** differs from existing state-of-the-art diagnostic tools:
+
+| Feature / Capability | Standard CNNs [4] | Sultan et al. [13] | Rashed et al. [9] | **XMorph (Ours)** |
+| :--- | :---: | :---: | :---: | :---: |
+| Deep Feature Learning | ✅ | ✅ | ✅ | **✅** |
+| Fractal Dimension (FD) | ❌ | ✅ | ❌ | **✅** |
+| Chaotic Metrics (ApEn, LE) | ❌ | ❌ | ❌ | **✅** |
+| **IWBN (Boundary Enhancement)** | ❌ | ❌ | ❌ | **✅** |
+| **Clinical Biomarker Fusion** | ❌ | ❌ | ❌ | **✅** |
+| Visual XAI (Grad-CAM++) | ✅ | ✅ | ❌ | **✅** |
+| Textual XAI (LLM Rationales) | ❌ | ❌ | ✅ | **✅** |
+
+---
+
+## ⚙️ Pipeline Stages
+
+1. **Stage 1 – Automated Tumor Segmentation**
+   - **Input:** Raw CE-T1 MRI Image.
+   - **Process:** DeepLabV3-based semantic segmentation using a ResNet-50 backbone.
+   - **Output:** Binary tumor mask and boundary contour.
+
+2. **Stage 2 – Tumor-Specific & IWBN Features**
+   - **Input:** Tumor Mask + Boundary Contour.
+   - **Process:** Extraction of radiological clinical features (REI, MLS) and our novel **Information-Weighted Boundary Normalization (IWBN)** time-series.
+   - **Output:** Quantitative feature arrays (`Non_Linear_Features.npy`, `clinical_features.npy`).
+
+3. **Stage 3–5 – Feature Fusion and Classification**
+   - **Input:** Deep CNN Embeddings + Stage 2 Feature Vectors.
+   - **Process:** PCA-based dimensionality reduction followed by synergistic fusion and classification via an optimized **XGBoost** model.
+   - **Output:** Predicted tumor class (Glioma, Meningioma, Pituitary) and confidence scores.
 
 4. **Stage 6 – Dual-Channel Explainability**
-   - Visual explainability using Grad-CAM
-   - Quantitative and textual interpretation outputs
+   - **Input:** Model Weights + SHAP values of fused features.
+   - **Process:** Generation of visual Grad-CAM++ saliency maps and LLM-assisted diagnostic narratives (GPT-5).
+   - **Output:** Interpretable visual heatmaps and textual clinical rationales.
 
 ---
 
-## Repository Structure
+## 📂 Repository Structure
 
-```
+```text
 .
-├── Stage1_DeepLabV3_Segmentation.ipynb
-├── Stage2_Tumor_Specific_Features.ipynb
-├── Stage(3_4_5)_Deep Features_Features Fusion_Classification.ipynb
-├── Stage6_Dual-Channel Visual–Textual Explainability.ipynb
-├── Brain_Dataset/
-│   ├── glioma/
-│   ├── meningioma/
-│   └── pituitary/
-├── outputs/
-└── requirements.txt
-```
-
+├── Script/                              # Sequential execution notebooks
+│   ├── Stage1_DeepLabV3_Segmentation.ipynb
+│   ├── Stage2_Tumor_Specific_Features.ipynb
+│   ├── Stage(3_4_5)_Deep Features_Features Fusion_Classification.ipynb
+│   └── Stage6_Dual-Channel Visual–Textual Explainability.ipynb
+├── src/                                 # Source data and assets
+│   ├── Dataset/                         # CE-T1 MRI samples organized by class
+│   ├── figure/                          # Result plots (ROC, Grad-CAM, etc.)
+│   ├── Non_Linear_Features.npy          # Extracted handcrafted chaotic metrics
+│   ├── clinical_features.npy            # Quantitative radiological biomarkers
+│   ├── information_weighted_time_series.npy # IWBN-enhanced boundary signals
+│   ├── labels.npy                       # Ground truth class labels
+│   ├── llm_prompts_testset.csv          # Structured data for reproducible GPT-5 inference
+│   └── logo.png                         # Project branding
+├── requirements.txt                     # Python dependencies
+└── README.md                            # This file
 ---
 
-## Dataset Format (Expected)
+## 🚀 Setup & Reproducibility
 
-- Data organized by class: `glioma`, `meningioma`, `pituitary`
-- Each sample includes:
-  - `*_image.png` : CE-T1 MRI image
+All notebooks must be executed **sequentially** to preserve the data dependency chain.
 
----
-
-## Setup
+### Environment Setup
 
 ```bash
+# Create and activate virtual environment
 python -m venv .venv
 source .venv/bin/activate
+
+# Install dependencies
 pip install -r requirements.txt
+
+# Launch Jupyter
 jupyter notebook
-```
 
----
 
-## Execution Order
-
-Run notebooks sequentially:
-
-1. Stage1_DeepLabV3_Segmentation.ipynb  
-2. Stage2_Tumor_Specific_Features.ipynb  
-3. Stage(3_4_5)_Deep Features_Features Fusion_Classification.ipynb  
-4. Stage6_Dual-Channel Visual–Textual Explainability.ipynb  
-
-> Update dataset and output paths inside each notebook before execution.
-
----
-
-## Expected Outputs
-
-- **Stage 1**
-  - Trained segmentation model checkpoint (`.pth`)
-  - Predicted tumor masks 
-
-- **Stage 2**
-  - Tumor-specific features
-  - Information-weighted time-series arrays (`.npy`)
-  - Class label arrays (`.npy`)
-
-- **Stage 3–5**
-  - Deep feature embeddings
-  - Fused feature representations
-
-- **Stage 6**
-  - Trained classifier checkpoint
-  - LLM_Prompt_test (`.csv`)
-  - Grad-CAM visual explanations (`.png`)
-
----
-
-## Notes
-
-- Supports local execution and Google Colab.
-- For reproducibility, fixed random seeds are recommended.
-- This code is intended for research use.
