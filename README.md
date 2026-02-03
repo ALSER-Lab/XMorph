@@ -55,6 +55,13 @@ How **XMorph** differs from existing state-of-the-art diagnostic tools:
    - **Input:** Model Weights + SHAP values of fused features.
    - **Process:** Generation of visual Grad-CAM++ saliency maps and LLM-assisted diagnostic narratives (GPT-5).
    - **Output:** Interpretable visual heatmaps and textual clinical rationales.
+---
+
+## 📝 Notes
+
+Reproducibility: All experiments use fixed random seeds (see notebooks).
+
+LLM Stage: Textual explanations are exported as CSV files and can be re-processed with GPT-4 or GPT-5 for deterministic narrative reproduction.
 
 ---
 
