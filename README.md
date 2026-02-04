@@ -43,7 +43,7 @@ How **XMorph** differs from existing state-of-the-art diagnostic tools:
 
 2. **Stage 2 – Tumor-Specific & IWBN Features**
    - **Input:** Tumor Mask + Boundary Contour.
-   - **Process:** Extraction of radiological clinical features (REI, MLS) and our novel **Information-Weighted Boundary Normalization (IWBN)** time-series.
+   - **Process:** Extraction of radiological clinical features (REI, MLS) and our novel **Information-Weighted Boundary Normalization (IWBN)** time-series and Non-linear features.
    - **Output:** Quantitative feature arrays (`Non_Linear_Features.npy`, `information_weighted_time_series.npy`,`clinical_features.npy`).
 
 3. **Stage 3–5 – Feature Fusion and Classification**
@@ -59,7 +59,7 @@ How **XMorph** differs from existing state-of-the-art diagnostic tools:
 
 ## 📝 Notes
 
-Reproducibility: All experiments use fixed random seeds (see notebooks).
+Reproducibility: All experiments use fixed random seeds (see Scripts).
 
 LLM Stage: Textual explanations are exported as CSV files and can be re-processed with GPT-4 or GPT-5 for deterministic narrative reproduction.
 🚀 Setup & Reproducibility
@@ -91,9 +91,6 @@ If you use XMorph in your research, please cite our work
 ├── src/                                 # Source data and assets
 │   ├── Dataset/                         # CE-T1 MRI samples organized by class
 │   ├── figure/                          # Result plots (ROC, Grad-CAM, etc.)
-│   ├── Non_Linear_Features.npy          # Extracted handcrafted chaotic metrics
-│   ├── clinical_features.npy            # Quantitative radiological biomarkers
-│   ├── information_weighted_time_series.npy # IWBN-enhanced boundary signals
 │   ├── labels.npy                       # Ground truth class labels
 │   ├── llm_prompts_testset.csv          # Structured data for reproducible GPT-5 inference
 │   └── logo.png                         # Project branding
