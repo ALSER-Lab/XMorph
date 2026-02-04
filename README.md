@@ -59,7 +59,7 @@ How **XMorph** differs from existing state-of-the-art diagnostic tools:
 
 ## 📝 Notes
 
-Reproducibility: All experiments use fixed random seeds (see Scripts).
+Reproducibility: All experiments use fixed random seeds (See Scripts).
 
 LLM Stage: Textual explanations are exported as CSV files and can be re-processed with GPT-4 or GPT-5 for deterministic narrative reproduction.
 🚀 Setup & Reproducibility
